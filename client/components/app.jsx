@@ -12,6 +12,16 @@ export default class App extends React.Component {
         params: {}
       }
     };
+    this.setView = this.setView.bind(this);
+  }
+
+  setView(name, params) {
+    this.setState({
+      view: {
+        name: name,
+        params: params
+      }
+    });
   }
 
   componentDidMount() {
@@ -29,7 +39,7 @@ export default class App extends React.Component {
     let appView = null;
     if (this.state.view.name === 'movie-list') {
       appView = <MovieList
-        setView={this.serView}
+        setView={this.setView}
       />;
     }
     return (
