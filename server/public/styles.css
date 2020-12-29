@@ -4,9 +4,14 @@
 }
 
 .movie-tn {
-  width: 18%;
+  width: 24%;
+  background-color: lightcoral;
 }
 
 .movie-image {
   width: 100%;
+}
+
+.movie-title {
+  font-size: 25px;
 }
