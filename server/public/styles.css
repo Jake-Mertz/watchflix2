@@ -1,0 +1,12 @@
+.movie-list {
+  max-width: 1480px;
+  height: 100rem;
+}
+
+.movie-tn {
+  width: 18%;
+}
+
+.movie-image {
+  width: 100%;
+}
