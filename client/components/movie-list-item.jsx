@@ -1,6 +1,6 @@
 import React from 'react';
 
-function MoviePage(props) {
+function MovieListItem(props) {
   return (
     <div>
       <img className="movie-image" src={props.image} alt="movie poster"></img>
@@ -14,4 +14,4 @@ function MoviePage(props) {
   );
 }
 
-export default MoviePage;
+export default MovieListItem;

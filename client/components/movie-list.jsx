@@ -1,5 +1,5 @@
 import React from 'react';
-import MoviePage from './movie-page';
+import MovieListItem from './movie-list-item';
 
 class MovieList extends React.Component {
   constructor(props) {
@@ -23,7 +23,7 @@ class MovieList extends React.Component {
     const movieListRender = this.state.movies.map(movie => {
       return (
         <div key={movie.productId} className="movie-tn">
-          <MoviePage
+          <MovieListItem
             title={movie.title}
             year={movie.year}
             genre={movie.genre}
