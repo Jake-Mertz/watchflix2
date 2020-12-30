@@ -22,7 +22,7 @@ class MovieList extends React.Component {
   render() {
     const movieListRender = this.state.movies.map(movie => {
       return (
-        <div key="{movie.productId}" className="movie-tn">
+        <div key={movie.productId} className="movie-tn">
           <MoviePage
             title={movie.title}
             year={movie.year}
@@ -34,11 +34,6 @@ class MovieList extends React.Component {
         </div>
       );
     });
-    // if (this.state.movies.length === 0) {
-    //   return (
-    //     <h1>hello world!</h1>
-    //   );
-    // }
     return (
       <div className="movie-list">{movieListRender}</div>
     );

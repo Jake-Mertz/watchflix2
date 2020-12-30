@@ -22,7 +22,7 @@ app.get('/api/health-check', (req, res, next) => {
 app.get('/api/movies', (req, res, next) => {
   const sql = `
   select
-  "title", "year", "genre", "description", "image"
+  "title", "year", "genre", "description", "image", "productId"
   from "movies"
   `;
   db.query(sql)
