@@ -1,5 +1,6 @@
 import React from 'react';
 import MovieList from './movie-list';
+import MovieInfo from './movie-info';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -39,6 +40,12 @@ export default class App extends React.Component {
     let appView = null;
     if (this.state.view.name === 'movie-list') {
       appView = <MovieList
+        setView={this.setView}
+      />;
+    }
+    if (this.state.view.name === 'movie-info') {
+      appView = <MovieInfo
+        details={this.state.view.params}
         setView={this.setView}
       />;
     }

@@ -35,6 +35,27 @@ app.get('/api/movies', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.get('/api/movies/:productId', (req, res, next) => {
+  const sql = `
+  select *
+  from "movies"
+  where "productId" = $1
+  `;
+  const productId = req.params.productId;
+  const params = [productId];
+  db.query(sql, params)
+    .then(result => {
+      const movie = result.rows;
+      if (movie.length === 0) {
+        return next(new ClientError('Movie is unavailable', 404));
+      }
+      res.status(200).json(
+        movie
+      );
+    })
+    .catch(err => next(err));
+});
+
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
 });
