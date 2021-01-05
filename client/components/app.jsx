@@ -11,7 +11,8 @@ export default class App extends React.Component {
       view: {
         name: 'movie-list',
         params: {}
-      }
+      },
+      myList: []
     };
     this.setView = this.setView.bind(this);
   }

@@ -36,7 +36,15 @@ class MovieList extends React.Component {
       );
     });
     return (
-      <div className="movie-list">{movieListRender}</div>
+      <div>
+        <div>
+          <h1>My List</h1>
+        </div>
+        <div>
+          <h1>New Titles</h1>
+          <div className="movie-list">{movieListRender}</div>
+        </div>
+      </div>
     );
   }
 }
