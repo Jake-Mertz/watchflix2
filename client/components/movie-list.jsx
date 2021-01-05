@@ -30,6 +30,7 @@ class MovieList extends React.Component {
             id={movie.productId}
             image={movie.image}
             description={movie.description}
+            setView={this.props.setView}
           />
         </div>
       );
