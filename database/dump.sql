@@ -18,12 +18,16 @@ SET row_security = off;
 
 ALTER TABLE IF EXISTS ONLY public.movies DROP CONSTRAINT IF EXISTS movies_pkey;
 ALTER TABLE IF EXISTS ONLY public.lists DROP CONSTRAINT IF EXISTS lists_pkey;
+ALTER TABLE IF EXISTS ONLY public."listItems" DROP CONSTRAINT IF EXISTS "listItems_pkey";
 ALTER TABLE IF EXISTS public.movies ALTER COLUMN "productId" DROP DEFAULT;
 ALTER TABLE IF EXISTS public.lists ALTER COLUMN "listId" DROP DEFAULT;
+ALTER TABLE IF EXISTS public."listItems" ALTER COLUMN "listItemId" DROP DEFAULT;
 DROP SEQUENCE IF EXISTS public."movies_productId_seq";
 DROP TABLE IF EXISTS public.movies;
 DROP SEQUENCE IF EXISTS public."lists_listId_seq";
 DROP TABLE IF EXISTS public.lists;
+DROP SEQUENCE IF EXISTS public."listItems_listItemId_seq";
+DROP TABLE IF EXISTS public."listItems";
 DROP EXTENSION IF EXISTS plpgsql;
 DROP SCHEMA IF EXISTS public;
 --
@@ -57,6 +61,37 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 SET default_tablespace = '';
 
 SET default_with_oids = false;
+
+--
+-- Name: listItems; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public."listItems" (
+    "listItemId" integer NOT NULL,
+    "listId" integer NOT NULL,
+    "movieId" integer NOT NULL
+);
+
+
+--
+-- Name: listItems_listItemId_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public."listItems_listItemId_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: listItems_listItemId_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public."listItems_listItemId_seq" OWNED BY public."listItems"."listItemId";
+
 
 --
 -- Name: lists; Type: TABLE; Schema: public; Owner: -
@@ -123,6 +158,13 @@ ALTER SEQUENCE public."movies_productId_seq" OWNED BY public.movies."productId";
 
 
 --
+-- Name: listItems listItemId; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public."listItems" ALTER COLUMN "listItemId" SET DEFAULT nextval('public."listItems_listItemId_seq"'::regclass);
+
+
+--
 -- Name: lists listId; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -134,6 +176,14 @@ ALTER TABLE ONLY public.lists ALTER COLUMN "listId" SET DEFAULT nextval('public.
 --
 
 ALTER TABLE ONLY public.movies ALTER COLUMN "productId" SET DEFAULT nextval('public."movies_productId_seq"'::regclass);
+
+
+--
+-- Data for Name: listItems; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public."listItems" ("listItemId", "listId", "movieId") FROM stdin;
+\.
 
 
 --
@@ -155,6 +205,13 @@ COPY public.movies ("productId", title, year, genre, description, image) FROM st
 
 
 --
+-- Name: listItems_listItemId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public."listItems_listItemId_seq"', 1, false);
+
+
+--
 -- Name: lists_listId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
@@ -166,6 +223,14 @@ SELECT pg_catalog.setval('public."lists_listId_seq"', 1, false);
 --
 
 SELECT pg_catalog.setval('public."movies_productId_seq"', 2, true);
+
+
+--
+-- Name: listItems listItems_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public."listItems"
+    ADD CONSTRAINT "listItems_pkey" PRIMARY KEY ("listItemId");
 
 
 --
