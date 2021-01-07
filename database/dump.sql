@@ -17,9 +17,13 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 ALTER TABLE IF EXISTS ONLY public.movies DROP CONSTRAINT IF EXISTS movies_pkey;
+ALTER TABLE IF EXISTS ONLY public.lists DROP CONSTRAINT IF EXISTS lists_pkey;
 ALTER TABLE IF EXISTS public.movies ALTER COLUMN "productId" DROP DEFAULT;
+ALTER TABLE IF EXISTS public.lists ALTER COLUMN "listId" DROP DEFAULT;
 DROP SEQUENCE IF EXISTS public."movies_productId_seq";
 DROP TABLE IF EXISTS public.movies;
+DROP SEQUENCE IF EXISTS public."lists_listId_seq";
+DROP TABLE IF EXISTS public.lists;
 DROP EXTENSION IF EXISTS plpgsql;
 DROP SCHEMA IF EXISTS public;
 --
@@ -53,6 +57,36 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 SET default_tablespace = '';
 
 SET default_with_oids = false;
+
+--
+-- Name: lists; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.lists (
+    "listId" integer NOT NULL,
+    "createdAt" timestamp(6) with time zone DEFAULT now() NOT NULL
+);
+
+
+--
+-- Name: lists_listId_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public."lists_listId_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: lists_listId_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public."lists_listId_seq" OWNED BY public.lists."listId";
+
 
 --
 -- Name: movies; Type: TABLE; Schema: public; Owner: -
@@ -89,10 +123,25 @@ ALTER SEQUENCE public."movies_productId_seq" OWNED BY public.movies."productId";
 
 
 --
+-- Name: lists listId; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.lists ALTER COLUMN "listId" SET DEFAULT nextval('public."lists_listId_seq"'::regclass);
+
+
+--
 -- Name: movies productId; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.movies ALTER COLUMN "productId" SET DEFAULT nextval('public."movies_productId_seq"'::regclass);
+
+
+--
+-- Data for Name: lists; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.lists ("listId", "createdAt") FROM stdin;
+\.
 
 
 --
@@ -101,14 +150,30 @@ ALTER TABLE ONLY public.movies ALTER COLUMN "productId" SET DEFAULT nextval('pub
 
 COPY public.movies ("productId", title, year, genre, description, image) FROM stdin;
 1	Atomic Blonde	2017	Action/Thriller	Charlize Theron bitch slaps Berlin	/images/atomic-blonde.jpg
+2	The Good The Bad and the Ugly	1966	Spaghetti Western	Some cowboys chase after gold	/images/thegoodbadnugly.jpg
 \.
+
+
+--
+-- Name: lists_listId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public."lists_listId_seq"', 1, false);
 
 
 --
 -- Name: movies_productId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."movies_productId_seq"', 1, false);
+SELECT pg_catalog.setval('public."movies_productId_seq"', 2, true);
+
+
+--
+-- Name: lists lists_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.lists
+    ADD CONSTRAINT lists_pkey PRIMARY KEY ("listId");
 
 
 --
