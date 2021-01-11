@@ -61,7 +61,7 @@ app.get('api/lists', (req, res, next) => {
 });
 
 app.post('api/lists', (req, res, next) => {
-  if (!req.session.productId) {
+  if (!req.body.productId) {
     res.status(400).json({ error: 'Movie could not be found' });
   }
   const listSQL = `
@@ -82,6 +82,14 @@ app.post('api/lists', (req, res, next) => {
       };
     });
 });
+// .then(result => {
+//   req.session.listId = result.listId;
+//   const listItemSQL = `
+//     insert into "listItems" ("listId", "productId")
+//     values ($1, $2)
+//     returning "listItemId"
+//   `;
+// });
 
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
