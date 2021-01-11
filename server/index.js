@@ -60,49 +60,35 @@ app.get('api/lists', (req, res, next) => {
   res.status(200).json();
 });
 
-// app.post('api/lists', (req, res, next) => {
-//   if (!req.body.productId) {
-//     res.status(400).json({ error: 'Movie could not be found' });
-//   }
-//   const yearSQL = `
-//     select "year" from "movies"
-//     where "productId" = $1
-//   `;
-//   const yearParams = [req.body.productId];
-//   db.query(yearSQL, listParams)
-//     .then(result => {
-//       const movies = result.rows;
-//       if (movies.length === 0) {
-//         throw new ClientError('Movie is unavailable', 404);
-//       }
-//       const listSQL = `
-//         insert into "lists" ("listId", "createdAt")
-//         values (default, default)
-//         returning "listId"
-//         `;
-//   if (req.session.listId) {
-//     return {
-//       listId: req.session.listId
-//     };
-//   }
-//   return db.query(listSQL)
-//     .then(result => {
-//       const list = result.rows[0];
-//       return {
-//         listId: list.listId
-//       };
-//     });
-// })
-//   .then(result => {
-//     req.session.listId = result.listId;
-//     const listItemSQL = `
-//     insert into "listItems" ("listId", "productId")
-//     values ($1, $2)
-//     returning "listItemId"
-//   `;
-//     const listItemParams = [result.listId, req.body.productId];
-//     return db.query(listItemSQL, listItemParams);
-//   });
+app.post('/api/lists', (req, res, next) => {
+  if (!req.body.productId) {
+    res.status(400).json({ error: 'Movie could not be found' });
+  }
+  const yearSQL = `
+    select "year" from "movies"
+    where "productId" = $1
+  `;
+  const yearParams = [req.body.year];
+  db.query(yearSQL, yearParams)
+    .then(result => {
+      const year = result.rows;
+      if (year.length === 0) {
+        throw new ClientError('Movie could not be found', 404);
+      }
+      const listSQL = `
+        insert into "lists" ("listId", "createdAt")
+        values (default, default)
+        returning "listId"
+      `;
+      if (req.session.listId) {
+        return {
+          listId: req.session.listId,
+          year: year[0].year
+        };
+      }
+      return db.query(listSQL);
+    });
+});
 
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
