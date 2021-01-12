@@ -1,22 +1,38 @@
 .movie-list {
   max-width: 1480px;
-  height: 100rem;
+  /* height: 100rem; */
   display: flex;
 }
 
-.movie-tn {
-  width: 17%;
-  height: 28%;
+/* Movie List Item */
+
+.movie-list-item {
+  width: 153px;
+  /* height: 20px; */
   background-color: lightcoral;
 }
 
 .movie-image {
-  width: 100%;
+  height: 233px;
 }
 
 .movie-title {
   font-size: 18px;
 }
+
+.movie-genre {
+  font-size: 14px;
+}
+
+.movie-year {
+  font-size: 14px;
+}
+
+.movie-description {
+  font-size: 14px;
+}
+
+/* Movie info */
 
 .movie-info-image {
   width: 30%;

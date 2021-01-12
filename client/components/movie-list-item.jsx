@@ -6,9 +6,9 @@ function MovieListItem(props) {
       <img className="movie-image" src={props.image} alt="movie poster"></img>
       <div>
         <h1 className="movie-title">{props.title}</h1>
-        <p>{props.genre}</p>
-        <p>{props.year}</p>
-        <p>{props.description}</p>
+        <h2 className="movie-genre">{props.genre}</h2>
+        <h2 className="movie-year">{props.year}</h2>
+        <h2 className="movie-description">{props.description}</h2>
       </div>
     </div>
   );
