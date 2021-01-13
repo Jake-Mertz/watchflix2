@@ -51,7 +51,7 @@ export default class App extends React.Component {
       />;
     }
     return (
-      <div>{appView}</div>
+      <div className="app-view">{appView}</div>
     );
   }
 }

@@ -1,7 +1,14 @@
+.app-view {
+  background-color: rgb(199, 96, 96);
+  height: 100rem;
+}
+
 .movie-list {
   max-width: 1480px;
   /* height: 100rem; */
   display: flex;
+  margin-left: 2.5rem;
+  margin-top: 1.5rem;
 }
 
 /* Movie List Item */
@@ -15,6 +22,11 @@
 
 .movie-list-item:hover {
   transform: scale(1.1);
+}
+
+.movie-list-item-info {
+  background-color: lightcoral;
+  padding: 10px 0px 5px 20px;
 }
 
 .movie-image {
