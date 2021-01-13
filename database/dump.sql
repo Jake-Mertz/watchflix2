@@ -199,8 +199,9 @@ COPY public.lists ("listId", "createdAt") FROM stdin;
 --
 
 COPY public.movies ("productId", title, year, genre, description, image) FROM stdin;
-1	Atomic Blonde	2017	Action/Thriller	Charlize Theron bitch slaps Berlin	/images/atomic-blonde.jpg
-2	The Good The Bad and the Ugly	1966	Spaghetti Western	Some cowboys chase after gold	/images/thegoodbadnugly.jpg
+1	Atomic Blonde	2017	Action/Thriller	Charlize Theron pulls a fast one	/images/atomic-blonde1.jpg
+2	The Good The Bad and the Ugly	1966	Spaghetti Western	Some cowboys chase after gold	/images/thegoodbadandugly.jpg
+3	Pirates of the Caribbean: The Curse of the Black Pearl	2003	Adventure/Action	Cortez's cursed gold gets returned	/images/pirates.jpeg
 \.
 
 
@@ -222,7 +223,7 @@ SELECT pg_catalog.setval('public."lists_listId_seq"', 1, false);
 -- Name: movies_productId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."movies_productId_seq"', 2, true);
+SELECT pg_catalog.setval('public."movies_productId_seq"', 3, true);
 
 
 --
