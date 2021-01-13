@@ -7,13 +7,18 @@
 /* Movie List Item */
 
 .movie-list-item {
-  width: 153px;
+  width: 100%;
   /* height: 20px; */
-  background-color: lightcoral;
+  /* background-color: lightcoral; */
+  transition: transform 85ms ease-in-out;
+}
+
+.movie-list-item:hover {
+  transform: scale(1.1);
 }
 
 .movie-image {
-  height: 233px;
+  height: 230px;
 }
 
 .movie-title {
