@@ -87,6 +87,8 @@ app.post('/api/lists', (req, res, next) => {
         };
       }
       return db.query(listSQL);
+    })
+    .then(result => {
     });
 });
 

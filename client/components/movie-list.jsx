@@ -41,11 +41,11 @@ class MovieList extends React.Component {
         <div>
           <h1 className="my-list-title">My List</h1>
         </div>
-        <Scrollbars style={{ width: 1200, height: 350 }}>
-          <div>
-            <h1 className="new-titles-title">New Titles</h1>
-            <div className="movie-list">{movieListRender}</div>
-          </div>
+        <div>
+          <h1 className="new-titles-title">New Titles</h1>
+        </div>
+        <Scrollbars style={{ width: 1200, height: 300 }}>
+          <div className="movie-list">{movieListRender}</div>
         </Scrollbars>
       </div>
     );
