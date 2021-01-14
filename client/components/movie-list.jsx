@@ -1,5 +1,6 @@
 import React from 'react';
 import MovieListItem from './movie-list-item';
+import { Scrollbars } from 'react-custom-scrollbars';
 
 class MovieList extends React.Component {
   constructor(props) {
@@ -40,10 +41,12 @@ class MovieList extends React.Component {
         <div>
           <h1 className="my-list-title">My List</h1>
         </div>
-        <div>
-          <h1 className="new-titles-title">New Titles</h1>
-          <div className="movie-list">{movieListRender}</div>
-        </div>
+        <Scrollbars style={{ width: 1200, height: 350 }}>
+          <div>
+            <h1 className="new-titles-title">New Titles</h1>
+            <div className="movie-list">{movieListRender}</div>
+          </div>
+        </Scrollbars>
       </div>
     );
   }
