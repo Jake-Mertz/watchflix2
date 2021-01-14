@@ -202,6 +202,7 @@ COPY public.movies ("productId", title, year, genre, description, image) FROM st
 1	Atomic Blonde	2017	Action/Thriller	Charlize Theron pulls a fast one	/images/atomic-blonde1.jpg
 2	The Good The Bad and the Ugly	1966	Spaghetti Western	Some cowboys chase after gold	/images/thegoodbadandugly.jpg
 3	Pirates of the Caribbean: The Curse of the Black Pearl	2003	Adventure/Action	Cortez's cursed gold gets returned	/images/pirates.jpeg
+4	Howl's Moving Castle	2004	Fantasy/Adventure	A witch meets a wandering wizard	/images/howlsmovingcastle.png
 \.
 
 
@@ -223,7 +224,7 @@ SELECT pg_catalog.setval('public."lists_listId_seq"', 1, false);
 -- Name: movies_productId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."movies_productId_seq"', 3, true);
+SELECT pg_catalog.setval('public."movies_productId_seq"', 4, true);
 
 
 --

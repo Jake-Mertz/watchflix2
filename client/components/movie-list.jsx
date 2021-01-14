@@ -38,10 +38,10 @@ class MovieList extends React.Component {
     return (
       <div>
         <div>
-          <h1>My List</h1>
+          <h1 className="my-list-title">My List</h1>
         </div>
         <div>
-          <h1>New Titles</h1>
+          <h1 className="new-titles-title">New Titles</h1>
           <div className="movie-list">{movieListRender}</div>
         </div>
       </div>

@@ -3,10 +3,18 @@
   height: 100rem;
 }
 
+.my-list-title {
+  margin-left: 2.5rem;
+}
+
+.new-titles-title {
+  margin-left: 2.5rem;
+}
+
 .movie-list {
-  max-width: 1480px;
+  /* max-width: 1480px; */
   /* height: 100rem; */
-  display: flex;
+  display: inline-flex;
   margin-left: 2.5rem;
   margin-top: 1.5rem;
 }
