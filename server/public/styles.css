@@ -1,6 +1,6 @@
 .app-view {
   background-color: rgb(199, 96, 96);
-  height: 100rem;
+  height: 48rem;
 }
 
 .my-list-title {
@@ -17,6 +17,7 @@
   display: inline-flex;
   margin-left: 2.5rem;
   margin-top: 1.5rem;
+  height: 10rem;
 }
 
 /* Movie List Item */
