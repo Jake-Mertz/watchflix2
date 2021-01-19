@@ -35,6 +35,33 @@ app.get('/api/movies', (req, res, next) => {
     .catch(err => next(err));
 });
 
+// app.get('/api/movies', (req, res, next) => {
+//   if (!req.session.listId) {
+//     return res.json([]);
+//   }
+//   const listItemSQL = `
+//     select "l"."listItemId",
+//     "l"."year",
+//     "m"."productId",
+//     "m"."image",
+//     "m"."title",
+//     "m"."genre",
+//     "m"."description"
+//     from "listItems" as "l"
+//     join "movies" as "m" using ("productId")
+//     where "l"."listId" = $1
+//   `;
+//   const listId = [req.session.listId];
+//   db.query(listItemSQL, listId)
+//     .then(result => {
+//       const movies = result.rows;
+//       res.status(200).json(
+//         movies
+//       );
+//     })
+//     .catch(err => next(err));
+// });
+
 app.get('/api/movies/:productId', (req, res, next) => {
   const sql = `
   select *
@@ -80,16 +107,47 @@ app.post('/api/lists', (req, res, next) => {
         values (default, default)
         returning "listId"
       `;
-      if (req.session.listId) {
-        return {
-          listId: req.session.listId,
-          year: year[0].year
-        };
-      }
+      // if (req.session.listId) {
+      //   return {
+      //     listId: req.session.listId,
+      //     year: year[0].year
+      //   };
+      // }
       return db.query(listSQL);
     })
     .then(result => {
+      // console.log(result.year);
     });
+  // .then(result => {
+  //   req.session.listId = result.listId;
+  //   const listItemSQL = `
+  //     insert into "listItems" ("listId", "productId", "year")
+  //     values ($1, $2, $3)
+  //     returning "cartItemId"
+  //   `;
+  //   const listItemParams = [result.cartId, req.body.productId, result.year];
+  //   return db.query(listItemSQL, listItemParams)
+  //     .then(result => {
+  //       const listItemSQL = `
+  //       select "l"."listItemId",
+  //       "l"."year",
+  //       "m"."productId",
+  //       "m"."image",
+  //       "m"."title",
+  //       "m"."genre",
+  //       "m"."description"
+  //       from "listItems" as "l"
+  //       join "movies" as "m" using ("productId")
+  //       where "m"."listItemId" = $1
+  //       `;
+  //       const listItem = [result.rows[0].listItemId];
+  //       return db.query(listItemSQL, listItem);
+  //     })
+  //     .then(result => {
+  //       res.status(201).json(result.rows[0]);
+  //     })
+  //     .catch(err => next(err));
+  // });
 });
 
 app.use('/api', (req, res, next) => {
