@@ -116,7 +116,7 @@ app.post('/api/lists', (req, res, next) => {
       return db.query(listSQL);
     })
     .then(result => {
-      // console.log(result.year);
+      // console.log(result.listId);
     });
   // .then(result => {
   //   req.session.listId = result.listId;
