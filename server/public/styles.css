@@ -11,8 +11,13 @@
   margin-left: 2.5rem;
 }
 
+/* .all-lists-render {
+  z-index: 1000;
+} */
+
 .movie-list-scrollbar {
   margin-left: 2.5rem;
+  height: 8rem;
 }
 
 .movie-list {
@@ -35,6 +40,8 @@
 
 .movie-list-item:hover {
   transform: scale(1.1);
+  /* position: absolute; */
+  z-index: 1000;
 }
 
 .movie-list-item-info {
