@@ -87,68 +87,70 @@ app.get('api/lists', (req, res, next) => {
   res.status(200).json();
 });
 
-app.post('/api/lists', (req, res, next) => {
-  if (!req.body.productId) {
-    res.status(400).json({ error: 'Movie could not be found' });
-  }
-  const yearSQL = `
-    select "year" from "movies"
-    where "productId" = $1
-  `;
-  const yearParams = [req.body.year];
-  db.query(yearSQL, yearParams)
-    .then(result => {
-      const year = result.rows;
-      if (year.length === 0) {
-        throw new ClientError('Movie could not be found', 404);
-      }
-      const listSQL = `
-        insert into "lists" ("listId", "createdAt")
-        values (default, default)
-        returning "listId"
-      `;
-      // if (req.session.listId) {
-      //   return {
-      //     listId: req.session.listId,
-      //     year: year[0].year
-      //   };
-      // }
-      return db.query(listSQL);
-    })
-    .then(result => {
-      // console.log(result.listId);
-    });
-  // .then(result => {
-  //   req.session.listId = result.listId;
-  //   const listItemSQL = `
-  //     insert into "listItems" ("listId", "productId", "year")
-  //     values ($1, $2, $3)
-  //     returning "cartItemId"
-  //   `;
-  //   const listItemParams = [result.cartId, req.body.productId, result.year];
-  //   return db.query(listItemSQL, listItemParams)
-  //     .then(result => {
-  //       const listItemSQL = `
-  //       select "l"."listItemId",
-  //       "l"."year",
-  //       "m"."productId",
-  //       "m"."image",
-  //       "m"."title",
-  //       "m"."genre",
-  //       "m"."description"
-  //       from "listItems" as "l"
-  //       join "movies" as "m" using ("productId")
-  //       where "m"."listItemId" = $1
-  //       `;
-  //       const listItem = [result.rows[0].listItemId];
-  //       return db.query(listItemSQL, listItem);
-  //     })
-  //     .then(result => {
-  //       res.status(201).json(result.rows[0]);
-  //     })
-  //     .catch(err => next(err));
-  // });
-});
+app.post('api');
+
+// app.post('/api/lists', (req, res, next) => {
+//   if (!req.body.productId) {
+//     res.status(400).json({ error: 'Movie could not be found' });
+//   }
+//   const yearSQL = `
+//     select "year" from "movies"
+//     where "productId" = $1
+//   `;
+//   const yearParams = [req.body.year];
+//   db.query(yearSQL, yearParams)
+//     .then(result => {
+//       const year = result.rows;
+//       if (year.length === 0) {
+//         throw new ClientError('Movie could not be found', 404);
+//       }
+//       const listSQL = `
+//         insert into "lists" ("listId", "createdAt")
+//         values (default, default)
+//         returning "listId"
+//       `;
+//       if (req.session.listId) {
+//         return {
+//           listId: req.session.listId,
+//           year: year[0].year
+//         };
+//       }
+//       return db.query(listSQL);
+//     })
+//     .then(result => {
+//       console.log(result.listId);
+//     });
+//   .then(result => {
+//     req.session.listId = result.listId;
+//     const listItemSQL = `
+//       insert into "listItems" ("listId", "productId", "year")
+//       values ($1, $2, $3)
+//       returning "cartItemId"
+//     `;
+//     const listItemParams = [result.cartId, req.body.productId, result.year];
+//     return db.query(listItemSQL, listItemParams)
+//       .then(result => {
+//         const listItemSQL = `
+//         select "l"."listItemId",
+//         "l"."year",
+//         "m"."productId",
+//         "m"."image",
+//         "m"."title",
+//         "m"."genre",
+//         "m"."description"
+//         from "listItems" as "l"
+//         join "movies" as "m" using ("productId")
+//         where "m"."listItemId" = $1
+//         `;
+//         const listItem = [result.rows[0].listItemId];
+//         return db.query(listItemSQL, listItem);
+//       })
+//       .then(result => {
+//         res.status(201).json(result.rows[0]);
+//       })
+//       .catch(err => next(err));
+//   });
+// });
 
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
