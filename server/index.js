@@ -99,18 +99,35 @@ app.get('api/lists', (req, res, next) => {
 //   db.query(movieSQL, product)
 //     .then(result => {
 //       const movie = result.rows[0];
+//       if (movie.length === 0) {
+//         throw new ClientError('Movie could not be found', 404);
+//       }
 //       const listSQL = `
 //         insert into "lists" ("listId", "createdAt")
-//         values ($1, $2)
+//         values (default, default)
 //         returning *
 //       `;
-//       const params = [listId, createdAt];
-//       return db.query(listSQL, params)
-//         .then(result2 => {
-//           res.json(result2.rows[0]);
+//       if (req.session.listId) {
+//         return {
+//           listId: req.session.listId
+//         }
+//       }
+//       return db.query(listSQL)
+//         .then(result => {
+//           const list = result.rows[0];
+//           return {
+//             listId: list.listId
+//           };
 //         });
-// })
-//   .catch(err => next(err));
+//       })
+//         .then(result => {
+//           req.session.listId = result.listId;
+//           const listMovieSQL = `
+//             insert into "listItems" ("listId", "productId")
+//             values ($1, $2)
+
+//           `;
+//   })
 // }
 
 // app.post('/api/lists', (req, res, next) => {
