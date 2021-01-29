@@ -83,11 +83,7 @@ app.get('/api/movies/:productId', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.get('api/lists', (req, res, next) => {
-  res.status(200).json();
-});
-
-// app.post('api/lists', (req, res, next) => {
+// app.post('/api/lists/', (req, res, next) => {
 //   if (!req.body.productId) {
 //     res.status(400).json({ error: 'Movie could not be found' });
 //   }
@@ -98,38 +94,42 @@ app.get('api/lists', (req, res, next) => {
 //   const product = [req.params.productId];
 //   db.query(movieSQL, product)
 //     .then(result => {
-//       const movie = result.rows[0];
+//       const year = result.rows[0];
+//       res.status(200).json(year);
+// });
 
-//       if (movie.length === 0) {
-//         throw new ClientError('Movie could not be found', 404);
-//       }
-//       const listSQL = `
-//         insert into "lists" ("listId", "createdAt")
-//         values (default, default)
-//         returning *
-//       `;
-//       if (req.session.listId) {
-//         return {
-//           listId: req.session.listId
-//         }
-//       }
-//       return db.query(listSQL)
-//         .then(result => {
-//           const list = result.rows[0];
-//           return {
-//             listId: list.listId
-//           };
-//         });
-//       })
-//         .then(result => {
-//           req.session.listId = result.listId;
-//           const listMovieSQL = `
-//             insert into "listItems" ("listId", "productId")
-//             values ($1, $2)
+app.get('/api/lists', (req, res, next) => {
+  res.status(200).json('hello!');
+});
 
-//           `;
-//   })
+// if (movie.length === 0) {
+//   throw new ClientError('Movie could not be found', 404);
 // }
+// const listSQL = `
+//   insert into "lists" ("listId", "createdAt")
+//   values (default, default)
+//   returning *
+// `;
+// if (req.session.listId) {
+//   return {
+//     listId: req.session.listId
+//   }
+// }
+// return db.query(listSQL)
+//   .then(result => {
+//     const list = result.rows[0];
+//     return {
+//       listId: list.listId
+//     };
+//   });
+// })
+//   .then(result => {
+//     req.session.listId = result.listId;
+//     const listMovieSQL = `
+//       insert into "listItems" ("listId", "productId")
+//       values ($1, $2)
+
+//     `;
 
 // app.post('/api/lists', (req, res, next) => {
 //   if (!req.body.productId) {
