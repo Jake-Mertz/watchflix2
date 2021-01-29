@@ -69,7 +69,8 @@ SET default_with_oids = false;
 CREATE TABLE public."listItems" (
     "listItemId" integer NOT NULL,
     "listId" integer NOT NULL,
-    "movieId" integer NOT NULL
+    "productId" integer NOT NULL,
+    year integer NOT NULL
 );
 
 
@@ -182,7 +183,7 @@ ALTER TABLE ONLY public.movies ALTER COLUMN "productId" SET DEFAULT nextval('pub
 -- Data for Name: listItems; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public."listItems" ("listItemId", "listId", "movieId") FROM stdin;
+COPY public."listItems" ("listItemId", "listId", "productId", year) FROM stdin;
 \.
 
 
