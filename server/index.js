@@ -92,13 +92,14 @@ app.get('api/lists', (req, res, next) => {
 //     res.status(400).json({ error: 'Movie could not be found' });
 //   }
 //   const movieSQL = `
-//     select * from "movies"
+//     select "year" from "movies"
 //     where productId = $1
 //   `;
 //   const product = [req.params.productId];
 //   db.query(movieSQL, product)
 //     .then(result => {
 //       const movie = result.rows[0];
+
 //       if (movie.length === 0) {
 //         throw new ClientError('Movie could not be found', 404);
 //       }
