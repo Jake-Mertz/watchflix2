@@ -83,20 +83,31 @@ app.get('/api/movies/:productId', (req, res, next) => {
     .catch(err => next(err));
 });
 
-// app.post('/api/lists/', (req, res, next) => {
-//   if (!req.body.productId) {
-//     res.status(400).json({ error: 'Movie could not be found' });
-//   }
-//   const movieSQL = `
-//     select "year" from "movies"
-//     where productId = $1
-//   `;
-//   const product = [req.params.productId];
-//   db.query(movieSQL, product)
-//     .then(result => {
-//       const year = result.rows[0];
-//       res.status(200).json(year);
-// });
+app.post('/api/lists/', (req, res, next) => {
+  if (!req.body.productId) {
+    res.status(400).json({ error: 'Movie could not be found' });
+  }
+  const movieSQL = `
+    select "year" from "movies"
+    where "productId" = $1
+  `;
+  const yearParams = [req.body.productId];
+  db.query(movieSQL, yearParams)
+    .then(result => {
+      const year = result.rows;
+      res.status(200).json(year);
+    });
+  // db.query(movieSQL, yearParams)
+  //   .then(result => {
+  //     const movieYear = result.rows;
+  //     res.send(movieYear);
+  //   });
+  // const product = [req.params.productId];
+  // db.query(movieSQL, product)
+  //   .then(result => {
+  //     const year = result.rows[0];
+  //     res.status(200).json(year);
+});
 
 app.get('/api/lists', (req, res, next) => {
   res.status(200).json('hello!');
