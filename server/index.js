@@ -95,8 +95,27 @@ app.post('/api/lists/', (req, res, next) => {
   db.query(movieSQL, yearParams)
     .then(result => {
       const year = result.rows;
-      res.status(200).json(year);
+      if (year.length === 0) {
+        throw new ClientError('Movie could not be found', 404);
+      }
+      const listSQL = `
+        insert into "lists" ("listId", "createdAt")
+        values ("default", "default")
+        returning "listId"
+      `;
+      if (req.session.listId) {
+        return {
+          listId: req.session.listId,
+          year: year[0].year
+        };
+      }
+      return db.query(listSQL);
+    })
+    .then(result => {
+      // const list = result.rows[0];
+      res.send(200).json(result.year);
     });
+
   // db.query(movieSQL, yearParams)
   //   .then(result => {
   //     const movieYear = result.rows;
