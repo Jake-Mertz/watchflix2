@@ -98,15 +98,6 @@ app.post('/api/lists/', (req, res, next) => {
       if (year.length === 0) {
         throw new ClientError('Movie could not be found', 404);
       }
-      const allSQL = `
-        select * from "movies"
-        where "productId" = $1
-      `;
-      return db.query(allSQL, yearParams);
-    })
-    .then(result => {
-      const movieInfo = result.rows;
-      res.json(movieInfo);
       const listSQL = `
         insert into "lists" ("listId", "createdAt")
         values (default, default)
@@ -121,8 +112,30 @@ app.post('/api/lists/', (req, res, next) => {
     })
     .then(result => {
       const list = result.rows;
-      res.json(list);
+      // res.json(list);
+      const listItemSQL = `
+        insert into "listItems" ("listItemId", "listId", "productId", "year")
+        values (default, $1, $2, $3)
+        returning "year"
+      `;
+      const listItemParams = [list.listId, req.session.productId, req.session.year];
+      db.query(listItemSQL, listItemParams)
+        .then(result => {
+          const listItem = result.rows;
+          res.json(listItem);
+        });
     });
+
+  //   const allSQL = `
+  //         select * from "movies"
+  //         where "productId" = $1
+  //       `;
+  //   return db.query(allSQL, yearParams);
+  // })
+  //   .then(result => {
+  //     const movieInfo = result.rows;
+  // res.json(movieInfo);
+
   // if (year.length === 0) {
   //   throw new ClientError('Movie could not be found', 404);
   // }
