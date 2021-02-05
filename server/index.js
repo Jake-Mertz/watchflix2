@@ -111,19 +111,20 @@ app.post('/api/lists/', (req, res, next) => {
       return db.query(listSQL);
     })
     .then(result => {
-      const list = result.rows;
+      req.session.listId = result.rows;
       // res.json(list);
       const listItemSQL = `
-        insert into "listItems" ("listItemId", "listId", "productId", "year")
-        values (default, $1, $2, $3)
+        insert into "listItems" ("listId", "productId", "year")
+        values ($1, $2, $3)
         returning "year"
       `;
-      const listItemParams = [list.listId, req.session.productId, req.session.year];
-      db.query(listItemSQL, listItemParams)
-        .then(result => {
-          const listItem = result.rows;
-          res.json(listItem);
-        });
+      const listItemParams = [req.session.listId, req.session.productId, req.session.year];
+      return db.query(listItemSQL, listItemParams);
+      // .then(result => {
+      //   const listItemConnectSQL = `
+
+      //   `;
+      // });
     });
 
   //   const allSQL = `
