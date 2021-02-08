@@ -87,12 +87,12 @@ app.post('/api/lists/', (req, res, next) => {
   if (!req.body.productId) {
     res.status(400).json({ error: 'Movie could not be found' });
   }
-  const movieSQL = `
+  const yearSQL = `
     select "year" from "movies"
     where "productId" = $1
   `;
-  const yearParams = [req.body.productId];
-  db.query(movieSQL, yearParams)
+  const productParams = [req.body.productId];
+  db.query(yearSQL, productParams)
     .then(result => {
       const year = result.rows;
       if (year.length === 0) {
@@ -111,28 +111,58 @@ app.post('/api/lists/', (req, res, next) => {
       }
       return db.query(listSQL)
         .then(result => {
+          const list = result.rows[0];
           return {
-            listId: result.listId,
-            year: result[0].year
+            listId: list.listId,
+            year: year[0].year
           };
         });
+    })
+    .then(result => {
+      req.session.listId = result.listId;
+      const listItemSQL = `
+      insert into "listItems" ("listId", "productId", "year")
+      values ($1, $2, $3)
+      returning "listItemId"
+      `;
+      const listItemParams = [result.listId, req.body.productId, result.year];
+      return db.query(listItemSQL, listItemParams);
+    })
+    .then(result => {
+      res.send(200).json(result);
     });
-  // .then(result => {
-  //   req.session.listId = result.listId;
-  //   res.send(200).json(result.year);
-  // const listItemSQL = `
-  //   insert into "listItems" ("listId", "productId", "year")
-  //   values ($1, $2, $3)
-  //   returning "year"
-  // `;
-  // const listItemParams = [req.session.listId, req.session.productId, req.session.year];
-  // return db.query(listItemSQL, listItemParams);
-  // .then(result => {
-  //   const listItemConnectSQL = `
-
-  //   `;
-  // });
 });
+
+// .then(result => {
+//   req.session.listId = result.listId;
+//   req.session.year = result.year;
+//   const listItemSQL = `
+//       insert into "listItems" ("listId", "productId", "year")
+//       values ($1, $2, $3)
+//       returning "year"
+//     `;
+//   const listItemParams = [req.session.listId, productParams, req.session.year];
+//   return db.query(listItemSQL, listItemParams);
+// })
+// .then(result => {
+//   res.send('made it so far!');
+// });
+
+// .then(result => {
+//   req.session.listId = result.listId;
+//   res.send(200).json(result.year);
+// const listItemSQL = `
+//   insert into "listItems" ("listId", "productId", "year")
+//   values ($1, $2, $3)
+//   returning "year"
+// `;
+// const listItemParams = [req.session.listId, req.session.productId, req.session.year];
+// return db.query(listItemSQL, listItemParams);
+// .then(result => {
+//   const listItemConnectSQL = `
+
+//   `;
+// });
 
 //   const allSQL = `
 //         select * from "movies"
