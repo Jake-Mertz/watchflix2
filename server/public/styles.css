@@ -26,7 +26,7 @@
   display: inline-flex;
   margin-left: -2.5rem;
   margin-top: 1.5rem;
-  height: 10rem;
+  height: 12rem;
 }
 
 /* Movie List Item */
@@ -40,7 +40,7 @@
 
 .movie-list-item:hover {
   transform: scale(1.1);
-  /* position: absolute; */
+  position: relative;
   z-index: 1000;
 }
 
