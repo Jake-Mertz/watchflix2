@@ -121,15 +121,32 @@ app.post('/api/lists/', (req, res, next) => {
     .then(result => {
       req.session.listId = result.listId;
       const listItemSQL = `
-      insert into "listItems" ("listId", "productId", "year")
-      values ($1, $2, $3)
-      returning "listItemId"
+        insert into "listItems" ("listId", "productId", "year")
+        values ($1, $2, $3)
+        returning "listItemId"
       `;
       const listItemParams = [result.listId, req.body.productId, result.year];
       return db.query(listItemSQL, listItemParams);
     })
     .then(result => {
-      res.send(200).json(result);
+      const listItemSQL = `
+        select "l"."listItemId",
+        "l"."year",
+        "m"."productId",
+        "m"."title",
+        "m"."genre",
+        "m"."description",
+        "m"."image"
+        from "listItems" as "l"
+        join "movies" as "m" using ("productId")
+        where "l"."listItemId" = $1
+      `;
+      const listItemResult = [result.rows[0].listItemId];
+      return db.query(listItemSQL, listItemResult)
+        .then(result => {
+          res.status(201).json(result.rows[0]);
+        })
+        .catch(err => next(err));
     });
 });
 
