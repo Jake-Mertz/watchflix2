@@ -1,6 +1,7 @@
 import React from 'react';
 import MovieList from './movie-list';
 import MovieInfo from './movie-info';
+// import MyList from './movie-list';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -53,7 +54,7 @@ export default class App extends React.Component {
     })
       .then(res => res.json())
       .then(data => newState.push(data))
-      .then(() => this.setState({ cart: newState }))
+      .then(() => this.setState({ list: newState }))
       .catch(err => console.error(err));
   }
 
