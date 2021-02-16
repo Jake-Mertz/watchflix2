@@ -65,6 +65,7 @@ export default class App extends React.Component {
     if (this.state.view.name === 'movie-list') {
       appView = <MovieList
         setView={this.setView}
+        listData={this.state.list}
       />;
     }
     if (this.state.view.name === 'movie-info') {
