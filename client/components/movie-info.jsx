@@ -45,7 +45,7 @@ class MovieInfo extends React.Component {
             <h3>{this.state.product[0].year}</h3>
             <p>{this.state.product[0].description}</p>
           </div>
-          <button>Add to My List</button>
+          <button onClick={() => this.props.addToMyList(this.props.details.id)}>Add to My List</button>
         </div>
       );
     }
