@@ -40,7 +40,7 @@ class MovieList extends React.Component {
         </div>
       );
     });
-    const myListRender = this.state.list.map(movie => {
+    const myListRender = this.props.listData.map(movie => {
       return (
         <div key={this.state.list.listItemId}>
           <MyListItem
